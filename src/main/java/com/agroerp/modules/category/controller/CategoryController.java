@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -26,8 +26,7 @@ public class CategoryController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<CategoryResponse> create(
             @Valid @RequestBody CategoryRequest request) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(categoryService.create(request));
     }
 
@@ -36,7 +35,8 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> update(
             @PathVariable Long id,
             @Valid @RequestBody CategoryRequest request) {
-        return ResponseEntity.ok(categoryService.update(id, request));
+        return ResponseEntity.ok(
+                categoryService.update(id, request));
     }
 
     @GetMapping("/{id}")

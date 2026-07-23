@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/dashboard")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class DashboardController {
 
     private final ProductRepository  productRepository;
@@ -43,34 +43,35 @@ public class DashboardController {
         DashboardResponse response = new DashboardResponse();
 
         response.setTotalProducts(
-                productRepository.findByActiveTrueOrderByNameAsc().size()
+                productRepository
+                        .findByActiveTrueOrderByNameAsc().size()
         );
         response.setTotalCustomers(
-                customerRepository.findByActiveTrueOrderByNameAsc().size()
+                customerRepository
+                        .findByActiveTrueOrderByNameAsc().size()
         );
         response.setTotalSuppliers(
-                supplierRepository.findByActiveTrueOrderByNameAsc().size()
+                supplierRepository
+                        .findByActiveTrueOrderByNameAsc().size()
         );
         response.setLowStockCount(
                 productRepository.findLowStockProducts().size()
         );
-        response.setTotalSalesCount(
-                saleRepository.count()
-        );
+        response.setTotalSalesCount(saleRepository.count());
         response.setTotalPurchasesCount(
-                purchaseRepository.count()
-        );
+                purchaseRepository.count());
 
-        BigDecimal todaySales = saleRepository
-                .getTotalSalesByDate(today);
+        BigDecimal todaySales =
+                saleRepository.getTotalSalesByDate(today);
         response.setTodaySales(
                 todaySales != null ? todaySales : BigDecimal.ZERO
         );
 
-        BigDecimal todayPurchases = purchaseRepository
-                .getTotalPurchaseByDate(today);
+        BigDecimal todayPurchases =
+                purchaseRepository.getTotalPurchaseByDate(today);
         response.setTodayPurchases(
-                todayPurchases != null ? todayPurchases : BigDecimal.ZERO
+                todayPurchases != null
+                        ? todayPurchases : BigDecimal.ZERO
         );
 
         BigDecimal totalDue = customerRepository

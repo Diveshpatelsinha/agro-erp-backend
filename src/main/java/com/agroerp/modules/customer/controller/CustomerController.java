@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -34,11 +35,13 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> update(
             @PathVariable Long id,
             @Valid @RequestBody CustomerRequest request) {
-        return ResponseEntity.ok(customerService.update(id, request));
+        return ResponseEntity.ok(
+                customerService.update(id, request));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponse> getById(@PathVariable Long id) {
+    public ResponseEntity<CustomerResponse> getById(
+            @PathVariable Long id) {
         return ResponseEntity.ok(customerService.getById(id));
     }
 
@@ -55,7 +58,8 @@ public class CustomerController {
     @GetMapping("/search")
     public ResponseEntity<List<CustomerResponse>> search(
             @RequestParam String name) {
-        return ResponseEntity.ok(customerService.searchByName(name));
+        return ResponseEntity.ok(
+                customerService.searchByName(name));
     }
 
     @DeleteMapping("/{id}")

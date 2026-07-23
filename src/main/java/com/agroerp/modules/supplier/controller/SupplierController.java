@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/suppliers")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class SupplierController {
 
     private final SupplierService supplierService;
@@ -34,11 +35,13 @@ public class SupplierController {
     public ResponseEntity<SupplierResponse> update(
             @PathVariable Long id,
             @Valid @RequestBody SupplierRequest request) {
-        return ResponseEntity.ok(supplierService.update(id, request));
+        return ResponseEntity.ok(
+                supplierService.update(id, request));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SupplierResponse> getById(@PathVariable Long id) {
+    public ResponseEntity<SupplierResponse> getById(
+            @PathVariable Long id) {
         return ResponseEntity.ok(supplierService.getById(id));
     }
 

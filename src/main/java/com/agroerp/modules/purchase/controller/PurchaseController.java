@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/purchases")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class PurchaseController {
 
     private final PurchaseService purchaseService;
@@ -26,8 +26,7 @@ public class PurchaseController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<PurchaseResponse> create(
             @Valid @RequestBody PurchaseRequest request) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(purchaseService.create(request));
     }
 

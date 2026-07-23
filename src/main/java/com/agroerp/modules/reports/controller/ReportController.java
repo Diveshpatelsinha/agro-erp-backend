@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/reports")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ReportController {
 
     private final ReportService reportService;
@@ -28,6 +28,7 @@ public class ReportController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate toDate) {
         return ResponseEntity.ok(
-                reportService.getDateRangeReport(fromDate, toDate));
+                reportService.getDateRangeReport(
+                        fromDate, toDate));
     }
 }

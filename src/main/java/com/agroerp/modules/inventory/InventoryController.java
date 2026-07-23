@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/inventory")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class InventoryController {
 
     private final ProductService productService;
@@ -25,6 +25,7 @@ public class InventoryController {
 
     @GetMapping("/low-stock")
     public ResponseEntity<List<ProductResponse>> getLowStock() {
-        return ResponseEntity.ok(productService.getLowStockProducts());
+        return ResponseEntity.ok(
+                productService.getLowStockProducts());
     }
 }
